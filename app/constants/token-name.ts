@@ -1,0 +1,1 @@
+export const TOKEN_NAME = 'bintel_auth_token'

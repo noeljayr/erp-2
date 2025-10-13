@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(16px, 1.25vw, 1.1em);
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  overflow-x: hidden;
+  background-color: var(--background);
+}
+
+@layer tw.base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    color: var(--black);
+    box-sizing: border-box;
+    font-size: var(--p1);
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+  }
+  p {
+    line-height: 180%;
+  }
+
+  ul li {
+    line-height: 180%;
+  }
+  a {
+    text-decoration: none;
+  }
+
+  svg {
+    height: 1.25rem;
+    width: 1.25rem;
+    transition: var(--transition);
+  }
+
+  svg path {
+    transition: var(--transition);
+  }
+}
+
+:root {
+  /* colors */
+  --black: #2e2e30;
+  --icon-black: #2e2e30cc;
+  --white: #ffffff;
+  --primary: #145993;
+  --icon-primary: #145993cc;
+  --border: #f0f0f0;
+  --border-2: #cfcfcf;
+  --input-bg: #fafafa;
+  --background: #f8f8f7;
+  --component-bg: #fcfcfd;
+  --high: #ff2600;
+  --medium: #ffa106;
+  --low: #01b18a;
+
+  /* typography */
+  --h1: clamp(1.5rem, 5vw, 2rem);
+  --h2: clamp(1.25rem, 4vw, 1.5rem);
+  --h3: clamp(1rem, 3.5vw, 1.25rem);
+  --h4: clamp(0.8rem, 2vw, 0.95rem);
+  --p1: clamp(0.75rem, 2.3vw, 0.8rem);
+  --p2: clamp(0.65rem, 2vw, 0.75rem);
+  --p3: clamp(0.55rem, 1.75vw, 0.65rem);
+  --p4: clamp(0.45rem, 1.5vw, 0.55rem);
+
+  /* Radius */
+  --radius-l: 0.8rem;
+  --radius: 0.55rem;
+  --radius-m: 0.45rem;
+  --radius-s: 0.35rem;
+  --radius-ss: 0.293rem;
+  --radius-xs: 0.195rem;
+
+  --transition: ease 0.35s;
+  --cta-hover: brightness(85%);
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: var(--h1);
+  font-weight: 600;
+  line-height: 130%;
+}
+
+h1 span {
+  font-size: var(--h1);
+  font-weight: 600;
+}
+
+h2 {
+  font-size: var(--h2);
+  font-weight: 600;
+  line-height: 130%;
+}
+
+h3 {
+  font-size: var(--h3);
+  font-weight: 600;
+  line-height: 150%;
+}
+h4 {
+  font-weight: 600;
+  font-size: var(--h4);
+  line-height: 180%;
+}
+
+.font-h1,
+.font-h1 * {
+  font-size: var(--h1) !important;
+}
+
+.font-h2,
+.font-h2 * {
+  font-size: var(--h2) !important;
+}
+
+.font-h3,
+.font-h3 * {
+  font-size: var(--h3) !important;
+}
+
+.font-h4,
+.font-h4 * {
+  font-size: var(--h4) !important;
+}
+
+.font-p1,
+.font-p1 * {
+  font-size: var(--p1) !important;
+}
+
+.font-p2,
+.font-p2 * {
+  font-size: var(--p2) !important;
+}
+
+.font-p3,
+.font-p3 * {
+  font-size: var(--p3) !important;
+}
+
+.font-p4,
+.font-p4 * {
+  font-size: var(--p4) !important;
+}
+
+.radio-btn-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.radio-btn-container * {
+  transition: var(--transition);
+}
+
+.radio-btn-container .radio-btn {
+  height: 1.15rem;
+  width: 1.15rem;
+  border: 1px solid var(--border-2);
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.radio-btn-container .radio-btn svg {
+  height: 0.75rem;
+  width: 0.75rem;
+  position: relative;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.selected-radio-btn .radio-btn {
+  border: 1px solid var(--primary);
+  background-color: var(--primary);
+}
+
+.selected-radio-btn .radio-btn svg {
+  transform: scale(1);
+  opacity: 1;
+}
+.radio-btn-container .radio-btn-label {
+  height: fit-content;
+  width: fit-content;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.cta {
+  background-color: var(--primary);
+  font-weight: 500;
+  font-size: var(--p2);
+  height: 1.75rem;
+  border-radius: var(--radius-s);
+  width: fit-content;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+  color: var(--white);
+  border: 1px solid #0a3e68;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  justify-content: center;
+}
+
+.popup {
+  box-shadow: lch(0 0 0 / 0.022) 0px 6px 18px, lch(0 0 0 / 0.044) 0px 3px 9px,
+    lch(0 0 0 / 0.044) 0px 1px 1px;
+  border-radius: 0.35rem;
+  border: 1px solid #cfcfcf;
+  position: absolute;
+  top: 115%;
+  width: 14rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 0.25rem;
+}
