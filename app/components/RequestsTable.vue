@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { formatNumber } from "#imports";
-import type { RequestTypes } from "~/types/requestTypes";
-import { useRefreshStore } from "#imports";
-import { getRequests } from "~/api-calls/requests";
-import IconChevronLeft from "./svg/IconChevronLeft.vue";
-import IconChevronRght from "./svg/IconChevronRght.vue";
+import { formatNumber } from '#imports';
+import type { RequestTypes } from '~/types/requestTypes';
+import { useRefreshStore } from '#imports';
+import { getRequests } from '~/api-calls/requests';
+import IconChevronLeft from './svg/IconChevronLeft.vue';
+import IconChevronRght from './svg/IconChevronRght.vue';
 
 const refreshStore = useRefreshStore();
 
@@ -21,11 +21,11 @@ function separateNumber(num: string) {
   const numValue = parseFloat(num);
   const fixed = numValue.toFixed(2);
 
-  const [whole, decimal] = fixed.split(".");
+  const [whole, decimal] = fixed.split('.');
 
   return {
     whole: whole,
-    decimal: "." + decimal,
+    decimal: '.' + decimal,
   };
 }
 
@@ -44,12 +44,12 @@ const setData = (data: Response) => {
 
 // Get URL parameters
 const getURLParams = () => {
-  if (typeof window === "undefined") return {};
+  if (typeof window === 'undefined') return {};
   const params = new URLSearchParams(window.location.search);
   return {
-    search: params.get("search") || undefined,
-    status: params.get("status") || undefined,
-    page: params.get("page") ? parseInt(params.get("page")!) : 1,
+    search: params.get('search') || undefined,
+    status: params.get('status') || undefined,
+    page: params.get('page') ? parseInt(params.get('page')!) : 1,
   };
 };
 
@@ -72,10 +72,10 @@ const fetchRequests = async () => {
 const urlParams = ref(getURLParams());
 watch(
   () => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       return window.location.search;
     }
-    return "";
+    return '';
   },
   () => {
     const newParams = getURLParams();
@@ -100,13 +100,13 @@ onMounted(() => {
   fetchRequests();
 
   // Listen for popstate events (back/forward navigation) and custom URL change events
-  if (typeof window !== "undefined") {
-    window.addEventListener("popstate", fetchRequests);
-    window.addEventListener("urlParamsChanged", fetchRequests);
+  if (typeof window !== 'undefined') {
+    window.addEventListener('popstate', fetchRequests);
+    window.addEventListener('urlParamsChanged', fetchRequests);
 
     onBeforeUnmount(() => {
-      window.removeEventListener("popstate", fetchRequests);
-      window.removeEventListener("urlParamsChanged", fetchRequests);
+      window.removeEventListener('popstate', fetchRequests);
+      window.removeEventListener('urlParamsChanged', fetchRequests);
     });
   }
 });
@@ -121,13 +121,13 @@ const goToPage = (page: number) => {
   }
 
   const params = new URLSearchParams(window.location.search);
-  params.set("page", page.toString());
+  params.set('page', page.toString());
 
   const newUrl = `${window.location.pathname}?${params.toString()}`;
-  history.pushState(null, "", newUrl);
+  history.pushState(null, '', newUrl);
 
   // Trigger a custom event to notify that URL params changed
-  window.dispatchEvent(new CustomEvent("urlParamsChanged"));
+  window.dispatchEvent(new CustomEvent('urlParamsChanged'));
 };
 
 const getVisiblePages = (): (number | string)[] => {
@@ -151,21 +151,21 @@ const getVisiblePages = (): (number | string)[] => {
       for (let i = 2; i <= 5; i++) {
         pages.push(i);
       }
-      pages.push("...");
+      pages.push('...');
       pages.push(total);
     } else if (current >= total - 3) {
       // Near the end
-      pages.push("...");
+      pages.push('...');
       for (let i = total - 4; i <= total; i++) {
         pages.push(i);
       }
     } else {
       // In the middle
-      pages.push("...");
+      pages.push('...');
       for (let i = current - 1; i <= current + 1; i++) {
         pages.push(i);
       }
-      pages.push("...");
+      pages.push('...');
       pages.push(total);
     }
   }
@@ -174,8 +174,8 @@ const getVisiblePages = (): (number | string)[] => {
 };
 
 const viewRequest = (id: string) => {
-  openModal("view-request", "true");
-  openModal("requestId", id);
+  openModal('view-request', 'true');
+  openModal('requestId', id);
 };
 </script>
 
@@ -204,10 +204,10 @@ const viewRequest = (id: string) => {
           <span
             class="flex h-full items-center border-r border-r-[var(--border)] px-2"
           >
-            <span class="">{{ request.currency == "MWK" ? "K " : "$ " }}</span>
+            <span class="">{{ request.currency == 'MWK' ? 'K ' : '$ ' }}</span>
             <span v-if="separateNumber(request.amount).whole">{{
               formatNumber(
-                (separateNumber(request.amount).whole ?? "").toString()
+                (separateNumber(request.amount).whole ?? '').toString()
               )
             }}</span>
             <span class="opacity-50">
@@ -253,11 +253,6 @@ const viewRequest = (id: string) => {
         <div class="text-red-500">
           Error loading requests. Please try again.
         </div>
-      </div>
-
-      <!-- Empty state -->
-      <div v-else class="flex justify-center items-center py-8">
-        <div class="text-gray-500">No requests found</div>
       </div>
     </div>
 

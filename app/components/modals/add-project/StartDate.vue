@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconCheck from '~/components/svg/IconCheck.vue';
 import { AnimatePresence, motion } from 'motion-v';
-import { useViewRequestFormData } from '#imports';
+import { useProjectFormData } from '#imports';
 import IconCalendar from '~/components/svg/IconCalendar.vue';
 import IconChevronRght from '~/components/svg/IconChevronRght.vue';
 import IconChevronLeft from '~/components/svg/IconChevronLeft.vue';
@@ -32,19 +32,6 @@ const shortWeekdays: string[] = [
   'Sat',
   'Sun',
 ];
-
-defineProps({
-  userId: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
-})
-
-const token = useAuthStore();
 
 const show = ref(false);
 const setShow = (val: boolean) => {
@@ -84,10 +71,10 @@ function goToNextMonth(): void {
 function selectDate(day: Date): void {
   selectedDate.value = day;
   if (selectedDate.value.toString().length > 0) {
-    formData.setRequiredOn(selectedDate.value.toISOString());
+    formData.setStartDate(selectedDate.value.toISOString());
     setShow(false);
   } else {
-    formData.setRequiredOn(null);
+    formData.setStartDate(null);
   }
 }
 
@@ -124,41 +111,21 @@ function selectPreset(type: PresetType): void {
 
 const containerRef = ref<HTMLElement | null>(null);
 useClickOutside(containerRef, () => setShow(false));
-const formData = useViewRequestFormData();
-
-// Watch for store changes and update local selectedDate
-watch(
-  () => formData.required_on,
-  (newDate) => {
-    if (newDate) {
-      selectedDate.value = new Date(newDate);
-      currentMonth.value = startOfMonth(new Date(newDate));
-    } else {
-      selectedDate.value = '';
-    }
-  },
-  { immediate: true }
-);
+const formData = useProjectFormData();
 </script>
 
 <template>
-  <div
-    ref="containerRef"
-    :class="`relative flex select-none  ${
-      token.user_id !== userId || status.toLowerCase() !== 'pending' ? 'pointer-events-none' : ''
-    }`"
-  >
+  <div ref="containerRef" class="relative flex select-none">
     <button
-      v-if="formData.required_on || status.toLowerCase() === 'pending'"
       type="button"
       @click="setShow(!show)"
       class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconCalendar class="h-4 w-4 mr-1" />
       <span class="leading-[normal]">{{
-        formData.required_on && formData.required_on.length > 0
-          ? formatDate3(formData.required_on)
-          : 'Date required'
+        formData.startDate && formData.startDate.length > 0
+          ? formatDate3(formData.startDate)
+          : 'Start date'
       }}</span>
     </button>
 
@@ -174,7 +141,7 @@ watch(
       >
         <span
           class="w-full font-medium opacity-50 border-b py-2 px-4 font-p2 mb-1"
-          >When funds are required (optional)</span
+          >End project scheduled to start (optional)</span
         >
         <div class="flex flex-col w-full px-2">
           <div class="presets gap-2 font-p3">

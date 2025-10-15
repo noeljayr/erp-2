@@ -146,7 +146,7 @@ watch(
         >
           <IconWalletOpen class="h-4 w-4" />
 
-          <span class="font-semibold leading-[normal]">All Requests</span>
+          <span class="font-semibold leading-[normal] cursor-default">All Requests</span>
         </button>
 
         <button
@@ -189,4 +189,6 @@ watch(
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

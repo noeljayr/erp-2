@@ -44,7 +44,7 @@ const route = useRoute();
       class="space-y-1 flex flex-col"
     >
       <NuxtLink
-        href="#"
+        href="/projects"
         :class="
           route.path.startsWith('/projects')
             ? 'opacity-40 pointer-events-none'

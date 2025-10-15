@@ -83,8 +83,12 @@ html {
   --radius-ss: 0.293rem;
   --radius-xs: 0.195rem;
 
-  --transition: ease 0.35s;
+  --transition: ease 0.40s;
   --cta-hover: brightness(85%);
+}
+
+button{
+  transition: var(--transition) !important;
 }
 
 body {
@@ -243,4 +247,19 @@ h4 {
   flex-direction: column;
   overflow: hidden;
   padding-bottom: 0.25rem;
+}
+
+
+.hide-scrollbar {
+  overflow: auto;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* IE, Edge (non-Chromium) */
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

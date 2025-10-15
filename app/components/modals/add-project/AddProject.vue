@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { AnimatePresence, motion } from 'motion-v';
 import { motionTransition, closeModal } from '#imports';
-import IconWalletOpen from '../svg/IconWalletOpen.vue';
-import IconChevronRght from '../svg/IconChevronRght.vue';
-import IconX from '../svg/IconX.vue';
-import Amount from './request-funds/Amount.vue';
-import Description from './request-funds/Description.vue';
-import Currency from './request-funds/Currency.vue';
-import Purpose from './request-funds/Purpose.vue';
-import Approver from './request-funds/Approver.vue';
-import DateRequired from './request-funds/DateRequired.vue';
-import { useRequestFormData } from '#imports';
-import { requestFunds } from '~/api-calls/requests';
+import IconGithub from '~/components/svg/IconGithub.vue';
+import IconChevronRght from '~/components/svg/IconChevronRght.vue';
+import IconX from '~/components/svg/IconX.vue';
+import Description from './Description.vue';
+import StartDate from './StartDate.vue';
+import EndDate from './EndDate.vue';
+import { useProjectFormData } from '#imports';
+import Lead from './Lead.vue';
 
-const { isOpen: open } = useUrlModal('new-request');
-const formData = useRequestFormData();
+const { isOpen: open } = useUrlModal('new-project');
+const formData = useProjectFormData();
 
 const loading = ref(false);
 const setLoading = (val: boolean) => {
@@ -29,26 +26,21 @@ const setSuccess = (val: boolean) => {
   success.value = val;
 };
 
-const submit = (e: Event) => {
-  e.preventDefault();
-  requestFunds({
-    setLoading,
-    setError,
-    setSuccess,
-    setStatusMessage: () => {},
-  });
-};
+function handleInput(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const newValue = target.value;
+  formData.setTitle(newValue);
+}
 </script>
 
 <template>
   <AnimatePresence mode="popLayout">
     <div
       v-if="open"
-      @click="closeModal('new-request')"
+      @click="closeModal('new-project')"
       class="absolute z-20 left-0 top-0 w-screen h-screen bg-black opacity-30"
     ></div>
     <motion.form
-      @submit="submit"
       :initial="{ opacity: 0 }"
       :animate="{ scale: 1, opacity: 1 }"
       :exit="{ opacity: 0 }"
@@ -58,37 +50,36 @@ const submit = (e: Event) => {
     >
       <div class="flex w-full items-center px-4 pt-2 pb-2 border-b">
         <div class="flex items-center space-x-2">
-          <IconWalletOpen class="h-4 w-4 opacity-75" />
+          <IconGithub class="h-4 w-4 opacity-75" />
           <IconChevronRght class="h-4 w-4 opacity-50" />
-          <span class="font-medium"> New funds request </span>
+          <span class="font-medium"> New project </span>
         </div>
 
         <span
+          @click="closeModal('new-project')"
           style="transition: var(--transition)"
           class="bg-white h-[1.75rem] w-[1.75rem] rounded-[0.35rem] cursor-pointer hover:brightness-90 flex items-center justify-center ml-auto"
         >
-          <IconX
-            @click="closeModal('new-request')"
-            strokeWidth="2"
-            class="h-4 w-4"
-          />
+          <IconX strokeWidth="2" class="h-4 w-4" />
         </span>
       </div>
 
       <div class="p-4 flex flex-col">
-        <Amount />
+        <input
+          :value="formData.title"
+          @input="handleInput"
+          type="text"
+          class="font-extrabold font-h2 outline-none border-0 bg-transparent"
+          placeholder="Title"
+        />
         <Description />
       </div>
 
       <div class="flex w-full items-center px-4 pt-2 pb-2 border-t">
         <div class="flex items-center space-x-2">
-          <Currency />
-
-          <Purpose />
-
-          <Approver />
-
-          <DateRequired />
+          <Lead />
+          <StartDate />
+          <EndDate />
         </div>
 
         <button
@@ -97,7 +88,7 @@ const submit = (e: Event) => {
             loading ? 'opacity-50 pointer-events-none' : ''
           }`"
         >
-          Send request
+          Create project
         </button>
       </div>
     </motion.form>

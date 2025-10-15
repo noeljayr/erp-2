@@ -5,7 +5,7 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: () => {
-    return navigateTo('/finances/requests')
+    return navigateTo('/projects/tasks')
   },
 })
 </script>

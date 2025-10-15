@@ -41,8 +41,6 @@ const setLinksActive = () => {
 
       <a href="#"> Google Drive </a>
 
-      <a href="#"> Zoom </a>
-
       <a href="#"> n8n </a>
     </motion.div>
   </motion.div>
@@ -61,8 +59,8 @@ a {
   position: relative;
 }
 
-a::before{
-  content: "•";
+a::before {
+  content: '•';
   font-weight: bold;
   opacity: 0.2;
   margin-right: 0.5rem;

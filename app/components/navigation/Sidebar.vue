@@ -2,6 +2,9 @@
 import { AnimatePresence, MotionConfig } from 'motion-v';
 import { motionTransition } from '#imports';
 import Profile from './Profile.vue';
+
+const route = useRoute();
+
 </script>
 
 <template>
@@ -12,7 +15,8 @@ import Profile from './Profile.vue';
 
     <MotionConfig :transition="motionTransition()">
       <AnimatePresence mode="popLayout">
-        <NavigationFinanceLinks />
+        <NavigationFinanceLinks v-if="route.path.startsWith('/finances')" />
+        <NavigationProjectsLinks v-if="route.path.startsWith('/projects')" />
         <NavigationERPLinks />
         <NavigationExternalLinks />
       </AnimatePresence>

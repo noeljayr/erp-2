@@ -1,22 +1,10 @@
 <script setup lang="ts">
 import IconCheck from '~/components/svg/IconCheck.vue';
 import { AnimatePresence, motion } from 'motion-v';
-import { useViewRequestFormData } from '#imports';
+import { useProjectFormData } from '#imports';
 import IconUserCircle from '~/components/svg/IconUserCircle.vue';
 import type { UserTypes } from '~/types/userTypes';
 import { BASE_URL } from '~/constants/base-url';
-import { useAuthStore } from '#imports';
-
-defineProps({
-  userId: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
-});
 
 const show = ref(false);
 const setShow = (val: boolean) => {
@@ -26,47 +14,45 @@ const setShow = (val: boolean) => {
 const containerRef = ref<HTMLElement | null>(null);
 useClickOutside(containerRef, () => setShow(false));
 
-const formData = useViewRequestFormData();
-const approver = ref<UserTypes | null>(null);
+const formData = useProjectFormData();
+const lead = ref<UserTypes | null>(null);
 
-// Watch for store changes and update local ref
-
-function setApprover(p: UserTypes) {
-  approver.value = p;
-  formData.setApprover(p.user_id);
+function setLead(p: UserTypes) {
+  lead.value = p;
+  formData.setLead(p.user_id);
 }
 
 const token = useAuthStore();
 
-const { data: partners, status } = useFetch(`${BASE_URL}/users?role=Partner`, {
+const { data: users, status } = useFetch(`${BASE_URL}/users`, {
   lazy: true,
   server: false,
   headers: {
     authorization: `Bearer ${token.token}`,
   },
-  transform: (approver: UserTypes[]) => {
-    return approver.map((approver) => ({
-      user_id: approver.user_id,
-      first_name: approver.first_name,
-      last_name: approver.last_name,
-      email: approver.email,
-      role: approver.role,
-      phone: approver.phone,
-      github_username: approver.github_username
+  transform: (users: UserTypes[]) => {
+    return users.map((user) => ({
+      user_id: user.user_id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      role: user.role,
+      phone: user.phone,
+      github_username: user.github_username,
     }));
   },
 });
 
 watch(
-  [() => formData.approver_id, partners],
+  [() => formData.lead, users],
   ([newApproverId, partnersList]) => {
     if (newApproverId && partnersList) {
       const foundApprover = partnersList.find(
-        (p) => p.user_id === newApproverId
+        (u) => u.user_id === newApproverId
       );
-      approver.value = foundApprover || null;
+      lead.value = foundApprover || null;
     } else {
-      approver.value = null;
+      lead.value = null;
     }
   },
   { immediate: true }
@@ -77,12 +63,12 @@ watch(
   <div ref="containerRef" class="relative flex select-none">
     <button
       type="button"
-      disabled
       @click="setShow(!show)"
-      class="border relative border-[#CFCFCF] pointer-events-none  leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconUserCircle class="h-4 w-4 mr-1" />
-      {{ approver ? approver.first_name : 'Approver' }}
+
+      {{ lead ? lead.first_name : 'Lead' }}
     </button>
 
     <AnimatePresence>
@@ -96,25 +82,24 @@ watch(
       >
         <span
           class="w-full font-medium opacity-50 border-b py-2 px-4 font-p2 mb-1"
-          >Who to approve the request</span
+          >Project lead</span
         >
-        <template v-if="status === 'success' && partners" v-for="p in partners">
+        <template v-if="status === 'success' && users" v-for="a in users">
           <span
             @click="
               () => {
-                setApprover(p);
+                setLead(a);
                 setShow(false);
               }
             "
-            v-if="p.user_id !== token.user_id"
             class="option w-[95%] relative rounded-[0.35rem] mx-auto space-x-2 font-p2 px-2 py-[0.35rem] cursor-pointer bg-white hover:brightness-90"
           >
             <span class="opacity-75 font-medium">
-              {{ p.first_name }} {{ p.last_name }}
+              {{ a.first_name }} {{ a.last_name }}
             </span>
             <AnimatePresence mode="popLayout">
               <motion.span
-                v-if="approver?.user_id === p.user_id"
+                v-if="lead?.user_id === a.user_id"
                 :initial="{ opacity: 0 }"
                 :animate="{ opacity: 1 }"
                 :exit="{ opacity: 0 }"

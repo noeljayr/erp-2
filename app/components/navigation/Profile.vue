@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import IconChevronDown from '../svg/IconChevronDown.vue';
 import { logout } from '~/api-calls/auth';
+
+defineProps({
+  invert: {
+    type: Boolean,
+    required: false,
+  },
+});
+
 const token = useAuthStore();
 
 const showMenu = ref(false);
@@ -10,29 +18,19 @@ const menuRef = ref<HTMLElement | null>(null);
 const setShowMenu = (state: boolean) => {
   showMenu.value = state;
 };
-const handleClickOutside = (event: MouseEvent) => {
-  if (
-    profileRef.value &&
-    !profileRef.value.contains(event.target as Node) &&
-    menuRef.value &&
-    !menuRef.value.contains(event.target as Node)
-  ) {
-    showMenu.value = false;
-  }
-};
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
-});
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
-});
+
+useClickOutside(profileRef, () => setShowMenu(false));
 </script>
 
 <template>
   <div
+    ref="profileRef"
     class="profile relative px-[0.35rem] w-full cursor-pointer flex items-center"
   >
-    <span @click="setShowMenu(!showMenu)" class="flex w-full gap-2">
+    <span
+      @click="setShowMenu(!showMenu)"
+      class="flex w-full items-center gap-2"
+    >
       <span
         class="h-[1.35rem] w-[1.35rem] bg-[var(--primary)] rounded-[var(--radius-s)] flex items-center justify-center font-extrabold text-white font-p4"
       >
@@ -41,12 +39,16 @@ onUnmounted(() => {
 
       <span class="mr-auto">{{ token.first_name }}</span>
 
-      <IconChevronDown class="h-3 w-3 opacity-50" />
+      <IconChevronDown
+        :class="`h-3 w-3 opacity-50 ${invert ? 'rotate-180' : ''}`"
+      />
     </span>
 
     <div
       v-if="showMenu"
-      class="absolute profile-menu p-1 space-y-1 bg-white z-10 left-1 top-[110%] w-[calc(100%_-_0.25rem)] flex flex-col rounded-[var(--radius-s)] border"
+      :class="`absolute profile-menu p-1 space-y-1 bg-white z-10 left-1 ${
+        invert ? 'bottom-[110%]' : 'top-[110%]'
+      } w-[calc(100%_-_0.25rem)] flex flex-col rounded-[var(--radius-s)] border`"
     >
       <NuxtLink
         @click="setShowMenu(false)"

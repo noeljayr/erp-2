@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full gap-4">
+  <div class="flex flex-col w-full gap-4 p-4">
     <RequestsHeader />
     <Toolbar />
     <RequestsTable />

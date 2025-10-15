@@ -5,4 +5,5 @@ export type UserTypes = {
   email: string;
   phone: string;
   role: string;
+  github_username: string | null;
 };
