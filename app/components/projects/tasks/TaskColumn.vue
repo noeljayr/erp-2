@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import IconCircle from '~/components/svg/IconCircle.vue';
-import IconLoading from '~/components/svg/IconLoading.vue';
-import IconCheckFilled from '~/components/svg/IconCheckFilled.vue';
-import IconPlus from '~/components/svg/IconPlus.vue';
-import type { TaskTypes } from '~/types/tasksTypes';
-import TaskCard from './TaskCard.vue';
-import { useTaskFormData } from '#imports';
+import IconCircle from "~/components/svg/IconCircle.vue";
+import IconLoading from "~/components/svg/IconLoading.vue";
+import IconCheckFilled from "~/components/svg/IconCheckFilled.vue";
+import IconPlus from "~/components/svg/IconPlus.vue";
+import type { TaskTypes } from "~/types/tasksTypes";
+import TaskCard from "./TaskCard.vue";
+import { useTaskFormData } from "#imports";
+import { ref } from "vue";
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     required: true,
@@ -22,10 +23,33 @@ defineProps({
   },
 });
 
+const emit = defineEmits(["update-task-status"]);
+
 const formData = useTaskFormData();
 const tiggleModal = (title: string) => {
-  openModal('new-task', 'true');
+  openModal("new-task", "true");
   formData.setStatus(title);
+};
+
+const isDragOver = ref(false);
+
+const handleDragOver = (e: DragEvent) => {
+  e.preventDefault();
+  isDragOver.value = true;
+};
+
+const handleDragLeave = () => {
+  isDragOver.value = false;
+};
+
+const handleDrop = (e: DragEvent) => {
+  e.preventDefault();
+  isDragOver.value = false;
+
+  const taskId = e.dataTransfer?.getData("taskId");
+  if (taskId) {
+    emit("update-task-status", taskId, props.title);
+  }
 };
 </script>
 
@@ -54,7 +78,13 @@ const tiggleModal = (title: string) => {
     </div>
 
     <div
-      class="grid w-full auto-rows-min gap-1 overflow-y-auto rounded-[var(--radius)] hide-scrollbar"
+      @dragover="handleDragOver"
+      @dragleave="handleDragLeave"
+      @drop="handleDrop"
+      :class="[
+        'grid w-full auto-rows-min gap-1 overflow-y-auto rounded-[var(--radius)] hide-scrollbar transition-colors',
+        isDragOver ? 'bg-blue-50 border-2 border-blue-300 border-dashed' : '',
+      ]"
     >
       <TaskCard v-for="task in tasks" :key="task.id" :task="task" />
     </div>

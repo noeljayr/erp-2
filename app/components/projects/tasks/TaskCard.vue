@@ -1,19 +1,28 @@
 <script setup lang="ts">
-import type { TaskTypes } from '~/types/tasksTypes';
-import IconGithub from '~/components/svg/IconGithub.vue';
-import IconChevronRght from '~/components/svg/IconChevronRght.vue';
+import type { TaskTypes } from "~/types/tasksTypes";
+import IconGithub from "~/components/svg/IconGithub.vue";
+import IconChevronRght from "~/components/svg/IconChevronRght.vue";
 
-defineProps({
+const props = defineProps({
   task: {
     type: Object as () => TaskTypes,
     required: true,
   },
 });
+
+const handleDragStart = (e: DragEvent) => {
+  if (e.dataTransfer) {
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("taskId", props.task.id);
+  }
+};
 </script>
 
 <template>
   <div
-    class="flex flex-col w-full space-y-2 overflow-hidden border pt-2 cursor-pointer border-[#F0F0F0] bg-white rounded-[var(--radius)]"
+    draggable="true"
+    @dragstart="handleDragStart"
+    class="flex flex-col w-full space-y-2 overflow-hidden border pt-2 cursor-grab active:cursor-grabbing border-[#F0F0F0] bg-white rounded-[var(--radius)] hover:shadow-md transition-shadow"
   >
     <div class="flex w-full items-center px-2">
       <span
