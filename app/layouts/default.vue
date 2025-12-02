@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid grid-cols-[15rem_1fr] gap-4 w-screen h-screen overflow-hidden"
+    class="grid grid-cols-[15rem_1fr] max-[1020px]:grid-cols-1 gap-4 w-screen h-screen overflow-hidden"
   >
     <Sidebar />
 

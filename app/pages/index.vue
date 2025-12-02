@@ -10,14 +10,14 @@ definePageMeta({
 
 const routes = [
   {
-    name: 'Projects',
-    description: 'Visualize and track Bintel’s progects',
-    link: '/projects',
-  },
-  {
     name: 'Finances',
     description: 'Automate finance management',
     link: '/finances',
+  },
+  {
+    name: 'Projects',
+    description: 'Visualize and track Bintel’s progects',
+    link: '/projects',
   },
   {
     name: 'Team',
@@ -31,9 +31,9 @@ const routes = [
   <div
     class="relative w-screen h-screen flex flex-col items-center justify-center"
   >
-    <NuxtImg src="/bintel.png" class="w-20" />
+    <NuxtImg src="/bintel.png" class="w-20 max-sm:w-[10vw] max-[400px]:w-[5rem]" />
 
-    <div class="grid grid-cols-3 cursor-pointer gap-2 w-[50%] my-8">
+    <div class="grid grid-cols-3 cursor-pointer gap-2 w-[50%] max-[1208px]:w-[65%] max-[925px]:w-[75%] max-[802px]:w-[90%] my-8">
       <NuxtLink
         :href="route.link"
         v-for="route in routes"
@@ -70,12 +70,12 @@ const routes = [
 
         <div class="flex flex-col">
           <span>{{ route.name }}</span>
-          <p class="font-p3 opacity-65">{{ route.description }}</p>
+          <p class="font-p3 opacity-65 max-[668px]:hidden">{{ route.description }}</p>
         </div>
       </NuxtLink>
     </div>
 
-    <div class="other-links flex gap-6 mt-4">
+    <div class="other-links flex gap-6 max-[420px]:gap-2 mt-4">
       <NuxtLink
         class="flex gap-2 font-semibold"
         href="http://Bintel.gitbook.io"

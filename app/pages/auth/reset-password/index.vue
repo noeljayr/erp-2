@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { definePageMeta } from '#imports';
 import { motion, AnimatePresence } from 'motion-v';
-import { login } from '~/api-calls/auth';
+import { resetPassword } from '~/api-calls/auth';
 import IconEye from '~/components/svg/IconEye.vue';
 import IconEyeSlash from '~/components/svg/IconEyeSlash.vue';
 import Loader from '~/components/ux/Loader.vue';
@@ -24,7 +24,7 @@ const submit = () => {
 };
 
 const email = ref('');
-const password = ref('');
+const new_password = ref('');
 const responseMessage = ref('');
 const loading = ref(false);
 const success = ref(false);
@@ -60,9 +60,9 @@ const setResponseMessage = (message: string) => {
         key="form"
         @submit="
           (e) => {
-            login({
+            resetPassword({
               email,
-              password,
+              new_password,
               setLoading,
               setSuccess,
               setError,
@@ -88,10 +88,10 @@ const setResponseMessage = (message: string) => {
           <div class="flex relative items-center">
             <input
               required
-              v-model="password"
+              v-model="new_password"
               :type="passwordInput ? 'password' : 'text'"
               class="font-medium h-9 border rounded-[0.35rem] w-full px-3 outline-none"
-              placeholder="Password"
+              placeholder="New password"
             />
 
             <span
@@ -123,10 +123,10 @@ const setResponseMessage = (message: string) => {
 
           <button ref="submitButton" style="width: 100%" class="cta">
             <Loader v-if="loading" />
-            <template v-else>Login</template>
+            <template v-else>Reset</template>
           </button>
 
-          <NuxtLink href="/auth/reset-password" class="ml-auto opacity-70 hover:underline" >Forgot password?</NuxtLink>
+          <NuxtLink href="/auth/login" class="mr-auto opacity-70 hover:underline" >Login</NuxtLink>
         </div>
       </motion.form>
 
@@ -156,7 +156,7 @@ const setResponseMessage = (message: string) => {
         layout="position"
         class="bg-green-200 font-semibold px-8 py-1 mt-4 rounded-3xl font-p3 text-green-600 border border-green-300"
         v-if="success"
-        >You're logged in and ready to go.
+        >You can now login with your new password.
       </motion.span>
     </AnimatePresence>
   </div>

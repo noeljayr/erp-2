@@ -2,6 +2,8 @@
 import type { TaskTypes } from "~/types/tasksTypes";
 import IconGithub from "~/components/svg/IconGithub.vue";
 import IconChevronRght from "~/components/svg/IconChevronRght.vue";
+import { motion } from "motion-v";
+import { ref } from "vue";
 
 const props = defineProps({
   task: {
@@ -10,19 +12,37 @@ const props = defineProps({
   },
 });
 
+const isDragging = ref(false);
+
 const handleDragStart = (e: DragEvent) => {
   if (e.dataTransfer) {
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("taskId", props.task.id);
+    isDragging.value = true;
   }
+};
+
+const handleDragEnd = () => {
+  isDragging.value = false;
 };
 </script>
 
 <template>
-  <div
+  <motion.div
     draggable="true"
     @dragstart="handleDragStart"
-    class="flex flex-col w-full space-y-2 overflow-hidden border pt-2 cursor-grab active:cursor-grabbing border-[#F0F0F0] bg-white rounded-[var(--radius)] hover:shadow-md transition-shadow"
+    @dragend="handleDragEnd"
+    :initial="{ opacity: 1, scale: 1 }"
+    :animate="{
+      opacity: isDragging ? 0.4 : 1,
+      scale: isDragging ? 0.95 : 1,
+    }"
+    :whileHover="{ scale: 1.02, y: -2 }"
+    :transition="{ duration: 0.2, ease: 'easeOut' }"
+    :class="[
+      'flex flex-col w-full space-y-2 overflow-hidden border pt-2 border-[#F0F0F0] bg-white rounded-[var(--radius)]',
+      isDragging ? 'cursor-grabbing' : 'cursor-pointer',
+    ]"
   >
     <div class="flex w-full items-center px-2">
       <span
@@ -73,7 +93,7 @@ const handleDragStart = (e: DragEvent) => {
         <IconChevronRght class="h-3 w-3 opacity-75" />
       </button>
     </div>
-  </div>
+  </motion.div>
 </template>
 
 <style scoped>

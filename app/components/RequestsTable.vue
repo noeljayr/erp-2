@@ -182,14 +182,14 @@ const viewRequest = (id: string) => {
 <template>
   <div class="h-full grid grid-rows-[auto_1fr_auto] w-full">
     <div
-      class="t-header w-full grid grid-cols-[12%_13%_13%_1fr_13%_10%_5rem] border-b border-b-[var(--border)] pb-2 items-center opacity-50"
+      class="t-header w-full grid grid-cols-[12%_13%_13%_1fr_13%_10%_5rem] max-[940px]:grid-cols-[17%_1fr_1fr_1fr_6rem] max-[640px]:grid-cols-[1fr_1fr_1fr_4.5rem] border-b border-b-[var(--border)] pb-2 items-center opacity-50"
     >
       <span class="font-medium px-2">Amount</span>
       <span class="font-medium px-2">By</span>
       <span class="font-medium px-2">Approver</span>
-      <span class="font-medium px-2">Purpose</span>
-      <span class="font-medium px-2">Initiated on</span>
-      <span class="font-medium px-2">Required on</span>
+      <span class="font-medium px-2 max-[940px]:hidden">Purpose</span>
+      <span class="font-medium px-2 max-[640px]:hidden">Initiated on</span>
+      <span class="font-medium px-2 max-[940px]:hidden">Required on</span>
       <span class="font-medium px-2">Status</span>
     </div>
 
@@ -199,10 +199,10 @@ const viewRequest = (id: string) => {
           @click="viewRequest(request.id)"
           v-for="request in requestsData.data"
           :key="request.request_id"
-          class="t-row h-[2.8rem] border-b border-b-[var(--border)] cursor-pointer bg-white w-full grid grid-cols-[12%_13%_13%_1fr_13%_10%_5rem] items-center"
+          class="t-row h-[2.8rem] border-b border-b-[var(--border)] cursor-pointer bg-white w-full grid grid-cols-[12%_13%_13%_1fr_13%_10%_5rem] max-[940px]:grid-cols-[17%_1fr_1fr_1fr_6rem] max-[640px]:grid-cols-[1fr_1fr_1fr_4.5rem] items-center"
         >
           <span
-            class="flex h-full items-center border-r border-r-[var(--border)] px-2"
+            class="flex h-full items-center truncate border-r border-r-[var(--border)] px-2"
           >
             <span class="">{{ request.currency == 'MWK' ? 'K ' : '$ ' }}</span>
             <span v-if="separateNumber(request.amount).whole">{{
@@ -210,7 +210,7 @@ const viewRequest = (id: string) => {
                 (separateNumber(request.amount).whole ?? '').toString()
               )
             }}</span>
-            <span class="opacity-50">
+            <span class="opacity-50 truncate">
               {{ separateNumber(request.amount).decimal }}
             </span>
           </span>
@@ -225,21 +225,21 @@ const viewRequest = (id: string) => {
             >{{ request.approver?.first_name }}</span
           >
           <span
-            class="truncate w-full h-full items-center flex border-r border-r-[var(--border)] px-2"
+            class="truncate max-[940px]:hidden w-full h-full items-center flex border-r border-r-[var(--border)] px-2"
           >
             <span class="truncate">
               {{ request.purpose }}
             </span>
           </span>
           <span
-            class="truncate w-full h-full items-center flex border-r border-r-[var(--border)] px-2"
+            class="truncate w-full max-[640px]:hidden h-full items-center flex border-r border-r-[var(--border)] px-2"
           >
             <span class="truncate">
               {{ formatDate4(request.initiated_on) }}
             </span>
           </span>
           <span
-            class="truncate w-full h-full items-center flex border-r border-r-[var(--border)] px-2"
+            class="truncate max-[940px]:hidden w-full h-full items-center flex border-r border-r-[var(--border)] px-2"
             >{{ request.required_on && formatDate5(request.required_on) }}</span
           >
           <span :class="`${request.status.toLowerCase()} capitalize px-2`">{{

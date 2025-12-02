@@ -5,6 +5,7 @@ import IconCheckCircle from "../svg/IconCheckCircle.vue";
 import IconXCircle from "../svg/IconXCircle.vue";
 import IconWalletOpen from "../svg/IconWalletOpen.vue";
 import IconSearch from "../svg/IconSearch.vue";
+import IconLayoutLeft from "../svg/IconLayoutLeft.vue";
 
 const filters = ["Pending", "Approved", "Rejected"];
 const selected = ref<string | null>(null);
@@ -132,8 +133,11 @@ watch(
 
 <template>
   <div class="w-full items-center flex">
-    <div class="w-fit flex items-center space-x-4">
-      <span class="font-medium opacity-75">Requests</span>
+    <div class="w-fit max-[640px]:w-full flex items-center min-[640px]:space-x-4">
+      <button @click="openModal('sidebar', 'true')" class="bg-white p-2 max-[640px]:mr-auto rounded-[0.35rem] hover:brightness-95" >
+        <IconLayoutLeft class="h-4 w-4" />
+      </button>
+      <span class="font-medium opacity-75 max-[640px]:hidden">Requests</span>
       <div class="flex gap-2 items-center">
         <button
           @click="toggleFilter(null)"
@@ -146,7 +150,10 @@ watch(
         >
           <IconWalletOpen class="h-4 w-4" />
 
-          <span class="font-semibold leading-[normal] cursor-default">All Requests</span>
+          <span class="font-semibold leading-[normal] cursor-default">
+            <span class="max-[400px]:hidden">All Requests</span>
+            <span class="max-[400px]:flex hidden">All</span>
+          </span>
         </button>
 
         <button
@@ -170,7 +177,7 @@ watch(
     </div>
 
     <div
-      class="search ml-auto grid grid-cols-[auto_1fr_auto] items-center gap-3 pl-2 pr-1 h-[2rem] border border-[#CFCFCF] rounded-[0.35rem] w-[16rem]"
+      class="search ml-auto max-[800px]:hidden grid grid-cols-[auto_1fr_auto] items-center gap-3 pl-2 pr-1 h-[2rem] border border-[#CFCFCF] rounded-[0.35rem] w-[16rem]"
     >
       <IconSearch class="h-4 w-4 opacity-50" />
       <input

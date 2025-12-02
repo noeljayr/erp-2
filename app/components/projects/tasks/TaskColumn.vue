@@ -7,6 +7,7 @@ import type { TaskTypes } from "~/types/tasksTypes";
 import TaskCard from "./TaskCard.vue";
 import { useTaskFormData } from "#imports";
 import { ref } from "vue";
+import { motion } from "motion-v";
 
 const props = defineProps({
   title: {
@@ -38,8 +39,15 @@ const handleDragOver = (e: DragEvent) => {
   isDragOver.value = true;
 };
 
-const handleDragLeave = () => {
-  isDragOver.value = false;
+const handleDragLeave = (e: DragEvent) => {
+  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+  const x = e.clientX;
+  const y = e.clientY;
+
+  // Only set isDragOver to false if we're actually leaving the element
+  if (x < rect.left || x >= rect.right || y < rect.top || y >= rect.bottom) {
+    isDragOver.value = false;
+  }
 };
 
 const handleDrop = (e: DragEvent) => {
@@ -77,16 +85,22 @@ const handleDrop = (e: DragEvent) => {
       </button>
     </div>
 
-    <div
+    <motion.div
       @dragover="handleDragOver"
       @dragleave="handleDragLeave"
       @drop="handleDrop"
+      :animate="{
+        backgroundColor: isDragOver
+          ? 'rgba(219, 234, 254, 0.5)'
+          : 'transparent',
+      }"
+      :transition="{ duration: 0.2, ease: 'easeOut' }"
       :class="[
-        'grid w-full auto-rows-min gap-1 overflow-y-auto rounded-[var(--radius)] hide-scrollbar transition-colors',
-        isDragOver ? 'bg-blue-50 border-2 border-blue-300 border-dashed' : '',
+        'grid w-full auto-rows-min gap-1 overflow-y-auto rounded-[var(--radius)] hide-scrollbar',
+        isDragOver ? 'border-2 border border-dashed' : '',
       ]"
     >
       <TaskCard v-for="task in tasks" :key="task.id" :task="task" />
-    </div>
+    </motion.div>
   </div>
 </template>

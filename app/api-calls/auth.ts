@@ -36,8 +36,8 @@ export const login = async ({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email,
+        password,
       }),
     });
 
@@ -64,6 +64,74 @@ export const login = async ({
       await nextTick();
 
       // Get redirect path before the delay
+      const route = useRoute();
+      const redirectPath = route.query.redirect as string;
+
+      // Small delay to show success message briefly, then redirect
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          const targetPath =
+            redirectPath && redirectPath !== '/auth/login/'
+              ? decodeURIComponent(redirectPath)
+              : '/';
+          window.location.href = targetPath;
+        }
+      }, 1500);
+    } else {
+      setResponseMessage(data.message);
+      setError(true);
+    }
+  } catch (err) {
+    setError(true);
+    setResponseMessage('Something went wrong.');
+  } finally {
+    setLoading(false);
+  }
+};
+
+type ResetParams = {
+  email: string;
+  new_password: string;
+  setLoading: (loading: boolean) => void;
+  setError: (error: boolean) => void;
+  setSuccess: (success: boolean) => void;
+  setResponseMessage: (message: string) => void;
+  e: Event;
+};
+
+export const resetPassword = async ({
+  email,
+  new_password,
+  setLoading,
+  setError,
+  setSuccess,
+  setResponseMessage,
+  e,
+}: ResetParams) => {
+  e.preventDefault();
+
+  setLoading(true);
+  setError(false);
+  setSuccess(false);
+
+  try {
+    const response = await fetch(`${BASE_URL}/users/reset-password/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        new_password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      setSuccess(true);
+      setResponseMessage(data.message);
+
       const route = useRoute();
       const redirectPath = route.query.redirect as string;
 
