@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "motion-v";
 import IconCoinsSwap from "~/components/svg/IconCoinsSwap.vue";
 import { useViewRequestFormData } from "#imports";
 
-
 defineProps({
   userId: {
     type: String,
@@ -14,9 +13,9 @@ defineProps({
     type: String,
     required: true,
   },
-})
+});
 
-const token = useAuthStore()
+const token = useAuthStore();
 
 const show = ref(false);
 const setShow = (val: boolean) => {
@@ -55,11 +54,18 @@ const currencies = [
 </script>
 
 <template>
-  <div ref="containerRef" :class="`relative flex select-none ${token.user_id !== userId || status.toLowerCase() !== 'pending' ? 'pointer-events-none' : ''}`">
+  <div
+    ref="containerRef"
+    :class="`relative flex select-none ${
+      token.user_id !== userId || status.toLowerCase() !== 'pending'
+        ? 'pointer-events-none'
+        : ''
+    }`"
+  >
     <button
       type="button"
       @click="setShow(!show)"
-      class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border relative border-[#CFCFCF] leading-[normal] font-p2 font-medium p-1.5 pr-2.5 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconCoinsSwap class="h-4 w-4 mr-1" />
       {{ selectedCurrency }}

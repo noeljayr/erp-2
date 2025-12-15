@@ -182,15 +182,15 @@ const viewRequest = (id: string) => {
 <template>
   <div class="h-full grid grid-rows-[auto_1fr_auto] w-full">
     <div
-      class="t-header w-full grid grid-cols-[12%_13%_13%_1fr_13%_10%_5rem] max-[940px]:grid-cols-[17%_1fr_1fr_1fr_6rem] max-[640px]:grid-cols-[1fr_1fr_1fr_4.5rem] border-b border-b-[var(--border)] pb-2 items-center opacity-50"
+      class="t-header w-full grid grid-cols-[12%_13%_13%_1fr_13%_10%_5rem] max-[940px]:grid-cols-[17%_1fr_1fr_1fr_6rem] max-[640px]:grid-cols-[1fr_1fr_1fr_4.5rem] border-b border-b-[var(--border)] pb-2 items-center"
     >
-      <span class="font-medium px-2">Amount</span>
-      <span class="font-medium px-2">By</span>
-      <span class="font-medium px-2">Approver</span>
-      <span class="font-medium px-2 max-[940px]:hidden">Purpose</span>
-      <span class="font-medium px-2 max-[640px]:hidden">Initiated on</span>
-      <span class="font-medium px-2 max-[940px]:hidden">Required on</span>
-      <span class="font-medium px-2">Status</span>
+      <span class="font-bold px-2">Amount</span>
+      <span class="font-bold px-2">By</span>
+      <span class="font-bold px-2">Approver</span>
+      <span class="font-bold px-2 max-[940px]:hidden">Purpose</span>
+      <span class="font-bold px-2 max-[640px]:hidden">Initiated on</span>
+      <span class="font-bold px-2 max-[940px]:hidden">Required on</span>
+      <span class="font-bold px-2">Status</span>
     </div>
 
     <div class="h-full w-full grid auto-rows-min overflow-y-auto">

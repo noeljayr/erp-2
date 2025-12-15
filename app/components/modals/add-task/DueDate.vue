@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { AnimatePresence, motion } from 'motion-v';
-import { useTaskFormData } from '#imports';
-import IconCalendar from '~/components/svg/IconCalendar.vue';
-import IconChevronRght from '~/components/svg/IconChevronRght.vue';
-import IconChevronLeft from '~/components/svg/IconChevronLeft.vue';
-import { ref, computed } from 'vue';
+import { AnimatePresence, motion } from "motion-v";
+import { useTaskFormData } from "#imports";
+import IconCalendar from "~/components/svg/IconCalendar.vue";
+import IconChevronRght from "~/components/svg/IconChevronRght.vue";
+import IconChevronLeft from "~/components/svg/IconChevronLeft.vue";
+import { ref, computed } from "vue";
 import {
   startOfMonth,
   endOfMonth,
@@ -15,21 +15,21 @@ import {
   format,
   isSameDay,
   isBefore,
-} from 'date-fns';
-import { formatDate3 } from '#imports';
+} from "date-fns";
+import { formatDate3 } from "#imports";
 
 const today: Date = new Date();
 const currentMonth: Ref<Date> = ref(startOfMonth(today));
-const selectedDate: Ref<Date | ''> = ref('');
+const selectedDate: Ref<Date | ""> = ref("");
 
 const shortWeekdays: string[] = [
-  'Mon',
-  'Tue',
-  'Wed',
-  'Thu',
-  'Fri',
-  'Sat',
-  'Sun',
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun",
 ];
 
 const show = ref(false);
@@ -54,7 +54,7 @@ const calendarDays = computed<Date[]>(() => {
 });
 
 const isAtStartMonth = computed<boolean>(
-  () => format(currentMonth.value, 'yyyy-MM') === format(today, 'yyyy-MM')
+  () => format(currentMonth.value, "yyyy-MM") === format(today, "yyyy-MM")
 );
 
 function goToPrevMonth(): void {
@@ -77,17 +77,17 @@ function selectDate(day: Date): void {
   }
 }
 
-type PresetType = 'today' | 'tomorrow' | 'week' | 'twoWeeks';
+type PresetType = "today" | "tomorrow" | "week" | "twoWeeks";
 
 function getPresetDate(type: PresetType): Date {
   switch (type) {
-    case 'today':
+    case "today":
       return today;
-    case 'tomorrow':
+    case "tomorrow":
       return addDays(today, 1);
-    case 'week':
+    case "week":
       return addDays(today, 7);
-    case 'twoWeeks':
+    case "twoWeeks":
       return addDays(today, 14);
     default:
       return today;
@@ -118,13 +118,13 @@ const formData = useTaskFormData();
     <button
       type="button"
       @click="setShow(!show)"
-      class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border relative border-[#CFCFCF] leading-[normal] font-p2 font-medium p-1.5 pr-2.5 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconCalendar class="h-4 w-4 mr-1" />
       <span class="leading-[normal]">{{
         formData.dueDate && formData.dueDate.length > 0
           ? formatDate3(formData.dueDate)
-          : 'Due date'
+          : "Due date"
       }}</span>
     </button>
 
@@ -177,7 +177,7 @@ const formData = useTaskFormData();
                 <IconChevronLeft class="h-3 w-3" />
               </button>
               <span class="month-title sora">{{
-                format(currentMonth, 'MMMM, yyyy')
+                format(currentMonth, "MMMM, yyyy")
               }}</span>
               <button type="button" @click="goToNextMonth">
                 <IconChevronRght class="h-3 w-3" />
@@ -207,7 +207,7 @@ const formData = useTaskFormData();
                 }"
                 @click="!isBefore(day, today) && selectDate(day)"
               >
-                {{ format(day, 'd') }}
+                {{ format(day, "d") }}
               </div>
             </div>
           </div>

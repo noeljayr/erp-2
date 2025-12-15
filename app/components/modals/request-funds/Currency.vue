@@ -3,6 +3,7 @@ import IconCheck from "~/components/svg/IconCheck.vue";
 import { AnimatePresence, motion } from "motion-v";
 import IconCoinsSwap from "~/components/svg/IconCoinsSwap.vue";
 import { useRequestFormData } from "#imports";
+import IconChevronDown from "~/components/svg/IconChevronDown.vue";
 
 const show = ref(false);
 const setShow = (val: boolean) => {
@@ -35,12 +36,13 @@ const currencies = [
 <template>
   <div ref="containerRef" class="relative flex select-none">
     <button
-    type="button"
+      type="button"
       @click="setShow(!show)"
-      class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border relative border-[#CFCFCF] leading-[normal] font-p2 font-medium p-1.5 pr-2.5 flex space-x-1 items-center rounded-[0.4rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconCoinsSwap class="h-4 w-4 mr-1" />
       {{ selectedCurrency }}
+      <IconChevronDown class="h-3.5 w-3.5 ml-1" />
     </button>
 
     <AnimatePresence>

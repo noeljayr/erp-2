@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import IconCheck from '~/components/svg/IconCheck.vue';
-import { AnimatePresence, motion } from 'motion-v';
-import { useTaskFormData } from '#imports';
-import IconUserCircle from '~/components/svg/IconUserCircle.vue';
-import type { UserTypes } from '~/types/userTypes';
-import { BASE_URL } from '~/constants/base-url';
+import IconCheck from "~/components/svg/IconCheck.vue";
+import { AnimatePresence, motion } from "motion-v";
+import { useTaskFormData } from "#imports";
+import IconUserCircle from "~/components/svg/IconUserCircle.vue";
+import type { UserTypes } from "~/types/userTypes";
+import { BASE_URL } from "~/constants/base-url";
 
 const show = ref(false);
 const setShow = (val: boolean) => {
@@ -38,7 +38,7 @@ const { data: assignees, status } = useFetch(`${BASE_URL}/users`, {
       email: assignee.email,
       role: assignee.role,
       phone: assignee.phone,
-      github_username: assignee.github_username
+      github_username: assignee.github_username,
     }));
   },
 });
@@ -64,11 +64,11 @@ watch(
     <button
       type="button"
       @click="setShow(!show)"
-      class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border relative border-[#CFCFCF] leading-[normal] font-p2 font-medium p-1.5 pr-2.5 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconUserCircle class="h-4 w-4 mr-1" />
 
-      {{ assignee ? assignee.first_name : 'Assignee' }}
+      {{ assignee ? assignee.first_name : "Assignee" }}
     </button>
 
     <AnimatePresence>

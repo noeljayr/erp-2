@@ -59,20 +59,20 @@ function onInput(event: Event): void {
       <motion.div
         layout
         :transition="motionTransition()"
-        class="grid grid-cols-[auto_1fr]"
+        class="grid grid-cols-[auto_1fr]  p-2 bg-gray-50 border border-black/10 rounded-[var(--radius-m)]"
       >
         <motion.span
           v-if="formData.currency == 'MWK'"
           layout="position"
           :transition="motionTransition()"
-          class="font-extrabold font-h1 mr-1.5"
+          class="font-extrabold font-h2 mr-1.5"
           >K</motion.span
         >
         <motion.span
           v-if="formData.currency == 'USD'"
           layout="position"
           :transition="motionTransition()"
-          class="font-extrabold font-h1 mr-1.5"
+          class="font-extrabold font-h2 mr-1.5"
           >$</motion.span
         >
         <input
@@ -83,7 +83,7 @@ function onInput(event: Event): void {
           @beforeinput="onInput"
           @keydown="onInput"
           @input="onInput"
-          class="font-extrabold font-h1 outline-none"
+          class="font-extrabold font-h2 bg-transparent outline-none"
           placeholder="0.00"
         />
       </motion.div>

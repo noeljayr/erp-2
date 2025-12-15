@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import IconCheck from '~/components/svg/IconCheck.vue';
-import { AnimatePresence, motion } from 'motion-v';
-import { useRequestFormData } from '#imports';
-import IconUserCircle from '~/components/svg/IconUserCircle.vue';
-import type { UserTypes } from '~/types/userTypes';
-import { BASE_URL } from '~/constants/base-url';
-import { useAuthStore } from '#imports';
+import IconCheck from "~/components/svg/IconCheck.vue";
+import { AnimatePresence, motion } from "motion-v";
+import { useRequestFormData } from "#imports";
+import IconUserCircle from "~/components/svg/IconUserCircle.vue";
+import type { UserTypes } from "~/types/userTypes";
+import { BASE_URL } from "~/constants/base-url";
+import { useAuthStore } from "#imports";
+import IconChevronDown from "~/components/svg/IconChevronDown.vue";
 
 const show = ref(false);
 const setShow = (val: boolean) => {
@@ -49,10 +50,11 @@ const { data: partners, status } = useFetch(`${BASE_URL}/users?role=Partner`, {
     <button
       type="button"
       @click="setShow(!show)"
-      class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border relative border-[#CFCFCF] leading-[normal] font-p2 font-medium p-1.5 pr-2.5 flex space-x-1 items-center rounded-[0.4rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconUserCircle class="h-4 w-4 mr-1" />
-      {{ approver ? approver.first_name : 'Approver' }}
+      {{ approver ? approver.first_name : "Approver" }}
+      <IconChevronDown class="h-3.5 w-3.5 ml-1" />
     </button>
 
     <AnimatePresence>

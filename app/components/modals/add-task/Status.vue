@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import IconCheck from '~/components/svg/IconCheck.vue';
-import { AnimatePresence, motion } from 'motion-v';
-import { useTaskFormData } from '#imports';
-import IconCircle from '~/components/svg/IconCircle.vue';
-import IconLoading from '~/components/svg/IconLoading.vue';
-import IconCheckFilled from '~/components/svg/IconCheckFilled.vue';
+import IconCheck from "~/components/svg/IconCheck.vue";
+import { AnimatePresence, motion } from "motion-v";
+import { useTaskFormData } from "#imports";
+import IconCircle from "~/components/svg/IconCircle.vue";
+import IconLoading from "~/components/svg/IconLoading.vue";
+import IconCheckFilled from "~/components/svg/IconCheckFilled.vue";
 
 const show = ref(false);
 const setShow = (val: boolean) => {
@@ -22,7 +22,7 @@ function setStatus(s: string) {
   formData.setStatus(s);
 }
 
-const statuses = ['To-do', 'In Progress', 'Done'];
+const statuses = ["To-do", "In Progress", "Done"];
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const statuses = ['To-do', 'In Progress', 'Done'];
     <button
       type="button"
       @click="setShow(!show)"
-      class="border relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border relative border-[#CFCFCF] leading-[normal] font-p2 font-medium p-1.5 pr-2.5 flex space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconCircle
         v-if="selectedStatus === 'To-do'"
@@ -41,7 +41,7 @@ const statuses = ['To-do', 'In Progress', 'Done'];
         class="h-4 w-4 opacity-50 mr-1"
       />
       <IconCheckFilled v-if="selectedStatus === 'Done'" class="h-4 w-4 mr-1" />
-      {{ selectedStatus ? selectedStatus : '---' }}
+      {{ selectedStatus ? selectedStatus : "---" }}
     </button>
 
     <AnimatePresence>

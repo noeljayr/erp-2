@@ -101,7 +101,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="editor-container mt-1">
+  <div class="editor-container">
     <div
       v-if="showToolbar"
       ref="toolbar"
@@ -210,7 +210,7 @@ onUnmounted(() => {
       </button>
     </div>
 
-    <div class="editor-wrapper relative w-full h-[12rem]">
+    <div class="editor-wrapper p-2 bg-gray-50 border border-black/10 rounded-[var(--radius-m)] relative w-full h-[12rem]">
       <!-- visually overlaid placeholder (pointer-events: none so user interacts with the editor) -->
       <div v-show="isEmpty" class="placeholder-overlay" aria-hidden="true">
         {{ placeholderText }}
@@ -247,8 +247,8 @@ onUnmounted(() => {
 .editor-wrapper { position: relative; }
 .placeholder-overlay {
   position: absolute;
-  top: 0;
-  left: 0;    /* match editor padding so text aligns */
+  top: 0.5rem;
+  left: 0.5rem;    /* match editor padding so text aligns */
   pointer-events: none;  /* makes overlay non-interactive */
   user-select: none;     /* can't select the placeholder text */
   color: #9ca3af;

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion-v';
 import IconInfoSquare from '~/components/svg/IconInfoSquare.vue';
 import { useRequestFormData } from '#imports';
 import { purposes } from '~/constants/purposes';
+import IconChevronDown from '~/components/svg/IconChevronDown.vue';
 
 const token = useAuthStore();
 
@@ -29,12 +30,13 @@ function setPurpose(p: string) {
     <button
       type="button"
       @click="setShow(!show)"
-      class="border max-w-[14rem] truncate grid grid-cols-[auto_1fr] relative border-[#CFCFCF] leading-[normal] font-p3 font-medium p-1 pr-2 space-x-1 items-center rounded-[0.3rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
+      class="border max-w-[14.5rem] truncate grid grid-cols-[auto_1fr_auto] relative border-[#CFCFCF] leading-[normal] font-p2 font-medium p-1.5 pr-2.5 space-x-1 items-center rounded-[0.4rem] transition-all duration-150 hover:bg-gray-50 border-[#CFCFCF"
     >
       <IconInfoSquare class="h-4 w-4 mr-1" />
       <span class="truncate">
         {{ selectedPurpose || 'Purpose' }}
       </span>
+      <IconChevronDown class="h-3.5 w-3.5 ml-1" />
     </button>
 
     <AnimatePresence>

@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { AnimatePresence, motion } from 'motion-v';
-import { motionTransition, closeModal } from '#imports';
-import IconWalletOpen from '~/components/svg/IconWalletOpen.vue';
-import IconChevronRght from '~/components/svg/IconChevronRght.vue';
-import IconX from '~/components/svg/IconX.vue';
-import Amount from './Amount.vue';
-import Description from './Description.vue';
-import Currency from './Currency.vue';
-import Purpose from './Purpose.vue';
-import Approver from './Approver.vue';
-import DateRequired from './DateRequired.vue';
-import { useRequestFormData } from '#imports';
-import { requestFunds } from '~/api-calls/requests';
+import { AnimatePresence, motion } from "motion-v";
+import { motionTransition, closeModal } from "#imports";
+import IconWalletOpen from "~/components/svg/IconWalletOpen.vue";
+import IconChevronRght from "~/components/svg/IconChevronRght.vue";
+import IconX from "~/components/svg/IconX.vue";
+import Amount from "./Amount.vue";
+import Description from "./Description.vue";
+import Currency from "./Currency.vue";
+import Purpose from "./Purpose.vue";
+import Approver from "./Approver.vue";
+import DateRequired from "./DateRequired.vue";
+import { useRequestFormData } from "#imports";
+import { requestFunds } from "~/api-calls/requests";
 
-const { isOpen: open } = useUrlModal('new-request');
+const { isOpen: open } = useUrlModal("new-request");
 const formData = useRequestFormData();
 
 const loading = ref(false);
@@ -29,12 +29,19 @@ const setSuccess = (val: boolean) => {
   success.value = val;
 };
 
+const { showToast } = useToast();
+
 const submit = (e: Event) => {
   e.preventDefault();
   requestFunds({
     setLoading,
     setError,
-    setSuccess,
+    setSuccess: (val: boolean) => {
+      setSuccess(val);
+      if (val) {
+        showToast("Funds request submitted successfully", "success");
+      }
+    },
     setStatusMessage: () => {},
   });
 };
@@ -72,13 +79,11 @@ const submit = (e: Event) => {
         </span>
       </div>
 
-      <div class="p-4 flex flex-col">
+      <div class="p-4 flex flex-col space-y-2">
         <Amount />
         <Description />
-      </div>
 
-      <div class="flex w-full items-center px-4 pt-2 pb-2 border-t">
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center  space-x-2">
           <Currency />
 
           <Purpose />
@@ -87,14 +92,16 @@ const submit = (e: Event) => {
 
           <DateRequired />
         </div>
+      </div>
 
+      <div class="flex w-full items-center px-4 pt-2 pb-2 border-t">
         <button
           :disabled="!formData.validateFormData()"
           :class="`cta ml-auto disabled:cursor-not-allowed ${
             loading ? 'opacity-50 pointer-events-none' : ''
           }`"
         >
-          Send request
+          Submit
         </button>
       </div>
     </motion.form>

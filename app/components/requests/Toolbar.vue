@@ -48,10 +48,10 @@ const exportToExcel = async () => {
   <div class="w-full items-center flex">
     <button
       @click="openModal('new-request', 'true')"
-      class="cursor-pointer border border-white font-p2 font-medium p-1 px-2 space-x-1 flex items-center rounded-[0.3rem] transition-all duration-150 bg-white hover:brightness-95 hover:opacity-100"
+      class="cta "
     >
-      <IconPlus class="h-4 w-4" /> 
-      <span>New request</span>
+      <IconPlus color="white" class="h-4 w-4 mr-1" /> 
+      <span class="text-white font-p3">New request</span>
     </button>
 
     <button

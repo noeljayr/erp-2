@@ -167,9 +167,9 @@ watch(
               : ' hover:bg-gray-50 border-[#CFCFCF]',
           ]"
         >
-          <IconLoading class="h-4 w-4" v-if="filter === 'Pending'" />
-          <IconCheckCircle class="h-4 w-4" v-if="filter === 'Approved'" />
-          <IconXCircle class="h-4 w-4" v-if="filter === 'Rejected'" />
+          <IconLoading color="#fcc11e" class="h-4 w-4" v-if="filter === 'Pending'" />
+          <IconCheckCircle color="#02b34c" class="h-4 w-4" v-if="filter === 'Approved'" />
+          <IconXCircle color="#ec1414" class="h-4 w-4" v-if="filter === 'Rejected'" />
 
           <span class="font-semibold leading-[normal]">{{ filter }}</span>
         </button>
